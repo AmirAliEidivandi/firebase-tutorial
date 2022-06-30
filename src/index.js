@@ -16,7 +16,10 @@ const db = getFirestore();
 
 const colRef = collection(db, "books");
 
-onSnapshot(colRef, (snapshot) => {
+// queries
+const q = query(colRef, where("author", "==", "afdnsk"));
+
+onSnapshot(q, colRef, (snapshot) => {
     let books = [];
     snapshot.docs.forEach((doc) => {
         books.push({ ...doc.data(), id: doc.id });
