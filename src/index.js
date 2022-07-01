@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, where, query, orderBy, serverTimestamp } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, query, orderBy, serverTimestamp } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCDbi9uLgHxLe_HbxRSd0LvKyNwdUcOTkI",
@@ -19,7 +19,7 @@ const colRef = collection(db, "books");
 // queries
 const q = query(colRef, orderBy("createdAt"));
 
-onSnapshot(q, colRef, (snapshot) => {
+onSnapshot(q, (snapshot) => {
     let books = [];
     snapshot.docs.forEach((doc) => {
         books.push({ ...doc.data(), id: doc.id });
@@ -50,3 +50,10 @@ deleteBookForm.addEventListener("submit", (e) => {
         deleteBookForm.reset();
     });
 });
+
+// get a signle document
+const docRef = doc(db, "books", "jVPe43BsNs3kURdbqtkN");
+
+onSnapshot(docRef, (doc) => {
+    console.log(doc.data(), doc.id);
+})
